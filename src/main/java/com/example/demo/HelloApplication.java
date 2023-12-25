@@ -19,6 +19,10 @@ public class HelloApplication extends Application {
     }
 
     public static void main(String[] args) {
+        dbConnection db = new dbConnection();
+        db.connectionDb("airport","postgres","12345678");
+
         launch();
     }
+
 }
