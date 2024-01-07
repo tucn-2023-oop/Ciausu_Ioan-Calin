@@ -2,6 +2,7 @@ package com.example.demo;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.Statement;
 
 public class dbConnection {
     public Connection connectionDb(String dbname,String userName,String pass){
