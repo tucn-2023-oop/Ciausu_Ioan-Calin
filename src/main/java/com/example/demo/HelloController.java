@@ -41,19 +41,18 @@ public class HelloController {
             if(resultSet.getString("pass").contentEquals( passField.getText())) {
                 welcomeText.setText("Authentication successful");
 
-              /*  FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("user_view.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("user_view.fxml"));
                 Scene scene = new Scene(fxmlLoader.load(), 800, 600);
                 UserView controller = fxmlLoader.getController();
                 controller.setDb(db);
                 Stage stage = (Stage) passField.getScene().getWindow();
-                stage.setTitle("Airport terminal!");
                 stage.setScene(scene);
-                stage.show();*/
+                stage.show();
 
-                Stage stage = (Stage) passField.getScene().getWindow();
+                /*Stage stage = (Stage) passField.getScene().getWindow();
                 Parent root = FXMLLoader.load(getClass().getResource("user_view.fxml"));
                 stage.setScene(new Scene(root, 800, 600));
-                stage.show();
+                stage.show();*/
             }else {
                 welcomeText.setText("Authentication failed");
             }
