@@ -34,6 +34,9 @@ public class UserView implements Initializable{
     private TableColumn<Flight, Integer> emptySeats;
 
     @FXML
+    private TableColumn<Flight, Integer> flightId;
+
+    @FXML
     private TableColumn<Flight, String> from;
 
     @FXML
@@ -54,12 +57,12 @@ public class UserView implements Initializable{
     @FXML
     private TextField toField;
 
+    private Integer index;
     Connection db;
 
-    Timestamp t = new Timestamp(1,1,1,1,1,1,1);
-    ObservableList<Flight> list = FXCollections.observableArrayList(
-        new Flight("lol","lo",t,t,"sal","sal",2)
-    );
+    public void setDb(Connection db) {
+        this.db = db;
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
         to.setCellValueFactory(new PropertyValueFactory<Flight,String>("to"));
@@ -69,26 +72,49 @@ public class UserView implements Initializable{
         plane.setCellValueFactory(new PropertyValueFactory<Flight,String>("plane"));
         crewLeader.setCellValueFactory(new PropertyValueFactory<Flight,String>("crewLeader"));
         emptySeats.setCellValueFactory(new PropertyValueFactory<Flight,Integer>("emptySeats"));
+        flightId.setCellValueFactory(new PropertyValueFactory<Flight,Integer>("flightId"));
     }
 
+    private String generateSearchSql(){
+        String q = "SELECT * FROM flights";
+        if(!(fromField.getText().isEmpty() & toField.getText().isEmpty()))
+            q = q + " WHERE ";
+        if(!fromField.getText().isEmpty()) {
+            q = q + "destinationairport='" + fromField.getText() + "'";
+            if(!toField.getText().isEmpty())
+                q = q + " AND";
+        }
+        if(!toField.getText().isEmpty())
+            q = q + "departureairport='"+toField.getText() + "'";
+        return q;
+    }
     @FXML
     public void searchClick(ActionEvent actionEvent) {
         ObservableList<Flight> data = FXCollections.observableArrayList();
         try {
             Statement statement = db.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM flights");
-
-
+            ResultSet resultSet = statement.executeQuery(generateSearchSql());
             while (resultSet.next()) {
                 String to = resultSet.getString("destinationairport");
                 String from = resultSet.getString("departureairport");
                 Timestamp departureTime = resultSet.getTimestamp("departuretime");
                 Timestamp arrivalTime = resultSet.getTimestamp("arrivaltime");
-                String plane = resultSet.getString("planeid");
-                String crewLeader = resultSet.getString("crewid");
+                int planeId = resultSet.getInt("planeid");
+                int crewLeaderId = resultSet.getInt("crewid");
                 int emptySeats = resultSet.getInt("empty_seats");
+                int flightId = resultSet.getInt("flightId");
 
-                data.add(new Flight(to, from, departureTime, arrivalTime, plane, crewLeader, emptySeats));
+                //get plane and crewLeader name
+                ResultSet resultSetPlane = db.createStatement().executeQuery("SELECT model FROM planes WHERE planeId=" + planeId);
+                resultSetPlane.next();
+                String plane = resultSetPlane.getString("model");
+
+                ResultSet resultSetCrew = db.createStatement().executeQuery("SELECT name FROM employees WHERE employeeid=" + crewLeaderId);
+                resultSetCrew.next();
+                String crewLeader = resultSetCrew.getString("name");
+
+                //set data
+                data.add(new Flight(to, from, departureTime, arrivalTime, plane, crewLeader, emptySeats,flightId));
             }
 
         } catch (SQLException ex) {
@@ -97,11 +123,11 @@ public class UserView implements Initializable{
         departures_table.setItems(data);
     }
 
-
-    public void setDb(Connection db) {
-        this.db = db;
+    public void newFlightSelected(MouseEvent mouseEvent) {
+        index = departures_table.getSelectionModel().getSelectedIndex();
     }
 
-    public void newFlightSelected(MouseEvent mouseEvent) {
+    public void reseveClick(ActionEvent actionEvent) {
+
     }
 }

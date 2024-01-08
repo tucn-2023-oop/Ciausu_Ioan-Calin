@@ -5,7 +5,8 @@ import java.sql.Timestamp;
 
 public class Flight {
    Timestamp arrivalTime,departureTime;
-   int emptySeats;
+   int emptySeats,flightId;
+    String crewLeader,from,to,plane;
 
     public Timestamp getArrivalTime() {
         return arrivalTime;
@@ -63,7 +64,11 @@ public class Flight {
         return plane;
     }
 
-    public Flight(String from, String to, Timestamp departureTime, Timestamp arrivalTime, String plane, String crewLeader, int emptySeats) {
+    public int getFlightId() {
+        return flightId;
+    }
+
+    public Flight(String from, String to, Timestamp departureTime, Timestamp arrivalTime, String plane, String crewLeader, int emptySeats, int flightId) {
         this.arrivalTime = arrivalTime;
         this.departureTime = departureTime;
         this.emptySeats = emptySeats;
@@ -71,7 +76,6 @@ public class Flight {
         this.from = from;
         this.to = to;
         this.plane = plane;
+        this.flightId = flightId;
     }
-
-    String crewLeader,from,to,plane;
 }

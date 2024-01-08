@@ -25,9 +25,10 @@
             <TableColumn fx:id="plane" prefWidth="75.0" text="Plane" />
             <TableColumn fx:id="crewLeader" prefWidth="74.4000244140625" text="Crew leader" />
             <TableColumn fx:id="emptySeats" prefWidth="74.4000244140625" text="Empty seats" />
+            <TableColumn fx:id="flightId" prefWidth="74.4000244140625" text="Flight id" />
         </columns>
       </TableView>
-      <Button fx:id="reserve" layoutX="61.0" layoutY="176.0" mnemonicParsing="false" text="Reserve" />
+      <Button fx:id="reserve" layoutX="61.0" layoutY="176.0" mnemonicParsing="false" onAction="#reseveClick" text="Reserve" />
       <Pane layoutY="536.0" prefHeight="64.0" prefWidth="800.0" style="-fx-background-color: #6fc5ed;" />
       <Text layoutX="27.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="From" wrappingWidth="36.800018310546875">
          <font>
