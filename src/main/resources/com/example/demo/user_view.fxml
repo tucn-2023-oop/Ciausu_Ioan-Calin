@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #ace3fc;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.UserView">
+   <children>
+      <Text layoutX="28.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Departures" wrappingWidth="200.0">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Text>
+      <TableView fx:id="departures_table" layoutX="174.0" layoutY="54.0" onMouseClicked="#newFlightSelected" prefHeight="200.0" prefWidth="608.0">
+        <columns>
+          <TableColumn prefWidth="50.0" text="From" />
+          <TableColumn prefWidth="50.0" text="To" />
+            <TableColumn prefWidth="100.0" text="Departure time" />
+            <TableColumn text="Arrival time" />
+            <TableColumn prefWidth="75.0" text="Plane" />
+            <TableColumn prefWidth="100.0" text="Remaining seats" />
+            <TableColumn prefWidth="74.4000244140625" text="Crew leader" />
+            <TableColumn prefWidth="74.4000244140625" text="Empty seats" />
+        </columns>
+      </TableView>
+      <Button fx:id="reserve" layoutX="61.0" layoutY="176.0" mnemonicParsing="false" text="Reserve" />
+      <Pane layoutY="536.0" prefHeight="64.0" prefWidth="800.0" style="-fx-background-color: #6fc5ed;" />
+      <Text layoutX="27.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="From" wrappingWidth="36.800018310546875">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text layoutX="27.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="To" wrappingWidth="36.800018310546875">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <TextField fx:id="fromField" layoutX="72.0" layoutY="65.0" prefHeight="26.0" prefWidth="78.0" />
+      <TextField fx:id="toField" layoutX="72.0" layoutY="99.0" prefHeight="26.0" prefWidth="78.0" />
+      <Button fx:id="searchFlights" layoutX="64.0" layoutY="141.0" mnemonicParsing="false" text="Search" />
+   </children>
+</AnchorPane>

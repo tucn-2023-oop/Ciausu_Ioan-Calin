@@ -2,10 +2,15 @@ package com.example.demo;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.*;
 
 public class HelloController {
@@ -33,14 +38,30 @@ public class HelloController {
             String query = "SELECT pass FROM users WHERE username='" + usernameField.getText()+"'";
             ResultSet resultSet = statement.executeQuery(query);
             resultSet.next();
-            if(resultSet.getString("pass").contentEquals( passField.getText()))
-                welcomeText.setText("Authentication failed");
-            else
+            if(resultSet.getString("pass").contentEquals( passField.getText())) {
                 welcomeText.setText("Authentication successful");
 
+              /*  FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("user_view.fxml"));
+                Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+                UserView controller = fxmlLoader.getController();
+                controller.setDb(db);
+                Stage stage = (Stage) passField.getScene().getWindow();
+                stage.setTitle("Airport terminal!");
+                stage.setScene(scene);
+                stage.show();*/
+
+                Stage stage = (Stage) passField.getScene().getWindow();
+                Parent root = FXMLLoader.load(getClass().getResource("user_view.fxml"));
+                stage.setScene(new Scene(root, 800, 600));
+                stage.show();
+            }else {
+                welcomeText.setText("Authentication failed");
+            }
         } catch (SQLException e) {
            // e.printStackTrace();
             welcomeText.setText("Authentication failed");
+        } catch (IOException e){
+
         }
     }
 
