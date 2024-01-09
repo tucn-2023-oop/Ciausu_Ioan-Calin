@@ -19,31 +19,40 @@ package com.example.demo;
 public class UserView implements Initializable{
 
     @FXML
+    private TableView<Flight> departures_table;
+    @FXML
     private TableColumn<Flight, Timestamp> arrivalTime;
-
     @FXML
     private TableColumn<Flight, String> crewLeader;
-
     @FXML
     private TableColumn<Flight, Timestamp> departureTime;
-
-    @FXML
-    private TableView<Flight> departures_table;
-
     @FXML
     private TableColumn<Flight, Integer> emptySeats;
-
     @FXML
     private TableColumn<Flight, Integer> flightId;
-
     @FXML
     private TableColumn<Flight, String> from;
-
-    @FXML
-    private TextField fromField;
-
     @FXML
     private TableColumn<Flight, String> plane;
+    @FXML
+    private TableColumn<Flight, String> to;
+
+
+
+    @FXML
+    private TableView<Ticket> ticketsTable;
+    @FXML
+    private TableColumn<Ticket,String> from1;
+    @FXML
+    private TableColumn<Ticket,String> to1;
+    @FXML
+    private TableColumn<Ticket,Timestamp> departureTime1;
+    @FXML
+    private TableColumn<Ticket,String> plane1;
+    @FXML
+    private TableColumn<Ticket,Integer> ticketId1;
+    @FXML
+    private TableColumn<Ticket,Integer> seat1;
 
     @FXML
     private Button reserve;
@@ -52,19 +61,28 @@ public class UserView implements Initializable{
     private Button searchFlights;
 
     @FXML
-    private TableColumn<Flight, String> to;
-
-    @FXML
     private TextField toField;
 
+    @FXML
+    private TextField fromField;
+
     private Integer index;
+    private Ticket selectedFlightTicket;
     Connection db;
+    String userName;
 
     public void setDb(Connection db) {
         this.db = db;
     }
+
+    public void setUserName(String userName){
+        this.userName = userName;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
+        indexToDelete = 0;
+
         to.setCellValueFactory(new PropertyValueFactory<Flight,String>("to"));
         from.setCellValueFactory(new PropertyValueFactory<Flight,String>("from"));
         departureTime.setCellValueFactory(new PropertyValueFactory<Flight,Timestamp>("departureTime"));
@@ -73,6 +91,12 @@ public class UserView implements Initializable{
         crewLeader.setCellValueFactory(new PropertyValueFactory<Flight,String>("crewLeader"));
         emptySeats.setCellValueFactory(new PropertyValueFactory<Flight,Integer>("emptySeats"));
         flightId.setCellValueFactory(new PropertyValueFactory<Flight,Integer>("flightId"));
+
+        from1.setCellValueFactory(new PropertyValueFactory<Ticket,String>("from1"));
+        to1.setCellValueFactory(new PropertyValueFactory<Ticket,String>("to1"));
+        departureTime1.setCellValueFactory(new PropertyValueFactory<Ticket,Timestamp>("departureTime1"));
+        ticketId1.setCellValueFactory(new PropertyValueFactory<Ticket,Integer>("ticketId1"));
+        seat1.setCellValueFactory(new PropertyValueFactory<Ticket,Integer>("seat1"));
     }
 
     private String generateSearchSql(){
@@ -125,9 +149,76 @@ public class UserView implements Initializable{
 
     public void newFlightSelected(MouseEvent mouseEvent) {
         index = departures_table.getSelectionModel().getSelectedIndex();
+        if(index>0) {
+            selectedFlightTicket = new Ticket();
+            selectedFlightTicket.flightId1 = flightId.getCellData(index);
+            selectedFlightTicket.userName1 = userName;
+            selectedFlightTicket.seatNumber1 = emptySeats.getCellData(index);
+            selectedFlightTicket.from1 = from.getCellData(index);
+            selectedFlightTicket.to1 = to.getCellData(index);
+            selectedFlightTicket.departureTime1 = departureTime.getCellData(index);
+        }
     }
 
-    public void reseveClick(ActionEvent actionEvent) {
+    public void reserveClick(ActionEvent actionEvent) {
+        if (index != null) {
+            try {
+                db.createStatement().executeUpdate(
+                "INSERT INTO tickets (flightid,seatnumber,ticketprice,username)" +
+                    "VALUES (" + selectedFlightTicket.flightId1 + "," + selectedFlightTicket.seatNumber1 +","+ 100 +",'"+ userName+"')"
+                );
+                //db.createStatement().executeUpdate("INSERT INTO tickets (flightid,seatnumber,ticketprice,username) VALUES (100,1,100,'John')");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
+
+    public void refreshClick(ActionEvent actionEvent) {
+        ObservableList<Ticket> data = FXCollections.observableArrayList();
+        try {
+            Statement statement = db.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM tickets WHERE username='"+userName+"'");
+            while (resultSet.next()) {
+                int tickedId = resultSet.getInt("ticketid");
+                int flightId = resultSet.getInt("flightid");
+                int seatNumber = resultSet.getInt("seatnumber");
+                int ticketPrice = resultSet.getInt("ticketprice");
+                String ticketUserName = resultSet.getString("username");
+
+                ResultSet resultSetFlight = db.createStatement().executeQuery("SELECT * FROM flights WHERE flightid=" + flightId);
+                resultSetFlight.next();
+                String departureAirport = resultSetFlight.getString("departureairport");
+                String destinationAirport = resultSetFlight.getString("destinationairport");
+                Timestamp departureTime = resultSetFlight.getTimestamp("departuretime");
+
+                //set data
+                data.add(new Ticket(userName,tickedId,flightId,seatNumber,destinationAirport,departureAirport,departureTime));
+            }
+
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        ticketsTable.setItems(data);
+    }
+
+    private int ticketToDeleteId;
+    private int indexToDelete;
+    public void delteTicketSelected(MouseEvent mouseEvent) {
+        indexToDelete = ticketsTable.getSelectionModel().getSelectedIndex();
+        System.out.println(indexToDelete);
+        ticketToDeleteId = ticketId1.getCellData(indexToDelete);
+    }
+
+    public void deleteTicketClick(ActionEvent actionEvent) {
+        try {
+            if(indexToDelete > 0)
+                db.createStatement().executeUpdate(
+                        "DELETE FROM tickets WHERE ticketid=" + ticketToDeleteId
+                );
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
     }
 }

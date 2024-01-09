@@ -45,6 +45,7 @@ public class HelloController {
                 Scene scene = new Scene(fxmlLoader.load(), 800, 600);
                 UserView controller = fxmlLoader.getController();
                 controller.setDb(db);
+                controller.setUserName(usernameField.getText());
                 Stage stage = (Stage) passField.getScene().getWindow();
                 stage.setScene(scene);
                 stage.show();
@@ -60,7 +61,7 @@ public class HelloController {
            // e.printStackTrace();
             welcomeText.setText("Authentication failed");
         } catch (IOException e){
-
+            System.out.println("Error loading next page");
         }
     }
 
