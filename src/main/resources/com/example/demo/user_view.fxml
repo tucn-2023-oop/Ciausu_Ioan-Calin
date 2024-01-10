@@ -30,7 +30,20 @@
         </columns>
       </TableView>
       <Button fx:id="reserve" layoutX="72.0" layoutY="441.0" mnemonicParsing="false" onAction="#reserveClick" text="Reserve" />
-      <Pane layoutY="515.0" prefHeight="85.0" prefWidth="800.0" style="-fx-background-color: #6fc5ed;" />
+      <Pane layoutY="515.0" prefHeight="85.0" prefWidth="800.0" style="-fx-background-color: #6fc5ed;">
+         <children>
+            <Text layoutX="14.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Log in as:" wrappingWidth="96.7999877929687">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Text>
+            <Text fx:id="userNameText" layoutX="97.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Text>
+            <Button fx:id="logOutButton" layoutX="14.0" layoutY="43.0" mnemonicParsing="false" onAction="#logOutClick" prefHeight="25.0" prefWidth="68.0" text="Log out" />
+         </children></Pane>
       <Text layoutX="38.0" layoutY="337.0" strokeType="OUTSIDE" strokeWidth="0.0" text="From" wrappingWidth="36.800018310546875">
          <font>
             <Font size="14.0" />

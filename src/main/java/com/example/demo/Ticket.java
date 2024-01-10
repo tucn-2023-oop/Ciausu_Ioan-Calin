@@ -3,12 +3,12 @@ package com.example.demo;
 import java.sql.Timestamp;
 
 public class Ticket {
-    int ticketId1,flightId1,seatNumber1;
-    String to1,from1,plane1,userName1;
+    int ticketId1,flightId1,seatNumber1,userId1;
+    String to1,from1,plane1;
     Timestamp departureTime1;
 
-    public Ticket(String userName,int ticketId, int flightId, int seatNo, String from, String to,Timestamp departureTime) {
-        this.userName1 = userName;
+    public Ticket(int userId,int ticketId, int flightId, int seatNo, String from, String to,Timestamp departureTime) {
+        this.userId1 = userId;
         this.ticketId1 = ticketId;
         this.flightId1 = flightId;
         this.seatNumber1 = seatNo;

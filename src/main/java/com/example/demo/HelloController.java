@@ -45,15 +45,12 @@ public class HelloController {
                 Scene scene = new Scene(fxmlLoader.load(), 800, 600);
                 UserView controller = fxmlLoader.getController();
                 controller.setDb(db);
-                controller.setUserName(usernameField.getText());
+                controller.setUser(usernameField.getText());
                 Stage stage = (Stage) passField.getScene().getWindow();
                 stage.setScene(scene);
                 stage.show();
 
-                /*Stage stage = (Stage) passField.getScene().getWindow();
-                Parent root = FXMLLoader.load(getClass().getResource("user_view.fxml"));
-                stage.setScene(new Scene(root, 800, 600));
-                stage.show();*/
+
             }else {
                 welcomeText.setText("Authentication failed");
             }
