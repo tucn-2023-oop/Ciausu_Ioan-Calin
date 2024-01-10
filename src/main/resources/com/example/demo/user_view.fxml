@@ -24,7 +24,7 @@
             <TableColumn fx:id="departureTime" prefWidth="100.0" text="Departure time" />
             <TableColumn fx:id="arrivalTime" text="Arrival time" />
             <TableColumn fx:id="plane" prefWidth="75.0" text="Plane" />
-            <TableColumn fx:id="crewLeader" prefWidth="74.4000244140625" text="Crew leader" />
+            <TableColumn fx:id="crewLeader" prefWidth="74.4000244140625" text="Captain" />
             <TableColumn fx:id="emptySeats" prefWidth="74.4000244140625" text="Empty seats" />
             <TableColumn fx:id="flightId" prefWidth="74.4000244140625" text="Flight id" />
         </columns>

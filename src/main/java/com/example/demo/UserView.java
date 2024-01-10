@@ -147,7 +147,7 @@ public class UserView implements Initializable{
                 resultSetPlane.next();
                 String plane = resultSetPlane.getString("model");
 
-                ResultSet resultSetCrew = db.createStatement().executeQuery("SELECT name FROM employees WHERE employeeid=" + crewLeaderId);
+                ResultSet resultSetCrew = db.createStatement().executeQuery("SELECT name FROM pilots WHERE pilotid=" + crewLeaderId);
                 resultSetCrew.next();
                 String crewLeader = resultSetCrew.getString("name");
 
