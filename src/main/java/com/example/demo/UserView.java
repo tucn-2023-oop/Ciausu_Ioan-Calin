@@ -28,12 +28,9 @@ public class UserView implements Initializable{
     private TableView<Flight> departures_table;
     @FXML
     private TableColumn<Flight, Timestamp> arrivalTime;
-    @FXML
-    private TableColumn<Flight, String> crewLeader;
+
     @FXML
     private TableColumn<Flight, Timestamp> departureTime;
-    @FXML
-    private TableColumn<Flight, Integer> emptySeats;
     @FXML
     private TableColumn<Flight, Integer> flightId;
     @FXML
@@ -103,8 +100,8 @@ public class UserView implements Initializable{
         departureTime.setCellValueFactory(new PropertyValueFactory<Flight,Timestamp>("departureTime"));
         arrivalTime.setCellValueFactory(new PropertyValueFactory<Flight,Timestamp>("arrivalTime"));
         plane.setCellValueFactory(new PropertyValueFactory<Flight,String>("plane"));
-        crewLeader.setCellValueFactory(new PropertyValueFactory<Flight,String>("crewLeader"));
-        emptySeats.setCellValueFactory(new PropertyValueFactory<Flight,Integer>("emptySeats"));
+        //crewLeader.setCellValueFactory(new PropertyValueFactory<Flight,String>("crewLeader"));
+        //emptySeats.setCellValueFactory(new PropertyValueFactory<Flight,Integer>("emptySeats"));
         flightId.setCellValueFactory(new PropertyValueFactory<Flight,Integer>("flightId"));
 
         from1.setCellValueFactory(new PropertyValueFactory<Ticket,String>("from1"));
@@ -168,7 +165,7 @@ public class UserView implements Initializable{
             selectedFlightTicket = new Ticket();
             selectedFlightTicket.flightId1 = flightId.getCellData(index);
             selectedFlightTicket.userId1 = userId;
-            selectedFlightTicket.seatNumber1 = emptySeats.getCellData(index);
+            //selectedFlightTicket.seatNumber1 = emptySeats.getCellData(index);
             selectedFlightTicket.from1 = from.getCellData(index);
             selectedFlightTicket.to1 = to.getCellData(index);
             selectedFlightTicket.departureTime1 = departureTime.getCellData(index);
@@ -259,5 +256,9 @@ public class UserView implements Initializable{
             stage.setScene(scene);
             stage.show();
         }catch(IOException ignored){};
+    }
+
+    public void getInfoClick(ActionEvent actionEvent) {
+
     }
 }

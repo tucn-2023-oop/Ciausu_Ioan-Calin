@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox alignment="CENTER" prefHeight="600" prefWidth="647.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.HelloController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+   <BorderPane prefHeight="200.0" prefWidth="200.0">
+      <right>
+         <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <children>
+               <BorderPane prefHeight="200.0" prefWidth="200.0">
+                  <center>
+                     <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                        <children>
+                           <TextField fx:id="usernameField" layoutX="26.0" layoutY="55.0" promptText="User" />
+                           <PasswordField fx:id="passField" layoutX="26.0" layoutY="102.0" promptText="Pass" />
+                           <Text layoutX="25.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Log in or create account">
+                              <font>
+                                 <Font size="14.0" />
+                              </font>
+                           </Text>
+                        </children>
+                     </Pane>
+                  </center>
+                  <bottom>
+                     <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                        <children>
+                           <Button fx:id="loginButton" layoutX="121.0" layoutY="152.0" mnemonicParsing="false" onAction="#onLoginButtonClick" text="Log in" />
+                            <Button fx:id="signupButton" layoutX="32.0" layoutY="152.0" onAction="#onSignupButtonClik" text="Sign up" />
+                        </children>
+                     </Pane>
+                  </bottom>
+               </BorderPane>
+            </children>
+         </Pane>
+      </right>
+      <bottom>
+      
+          <Label fx:id="welcomeText" BorderPane.alignment="CENTER" />
+      </bottom>
+      <left>
+         <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <children>
+               <ImageView fitHeight="535.0" fitWidth="553.0">
+                  <image>
+                     <Image url="@../../../../../target/classes/images/plane.png" />
+                  </image>
+               </ImageView>
+            </children>
+         </AnchorPane>
+      </left>
+   </BorderPane>
+</VBox>
