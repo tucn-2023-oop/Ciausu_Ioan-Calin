@@ -42,7 +42,8 @@
                   <Font size="15.0" />
                </font>
             </Text>
-            <Button fx:id="logOutButton" layoutX="14.0" layoutY="43.0" mnemonicParsing="false" onAction="#logOutClick" prefHeight="25.0" prefWidth="68.0" text="Log out" />
+            <Button fx:id="logOutButton" layoutX="712.0" layoutY="30.0" mnemonicParsing="false" onAction="#logOutClick" prefHeight="25.0" prefWidth="68.0" text="Log out" />
+            <Button fx:id="changePassButton" layoutX="14.0" layoutY="42.0" mnemonicParsing="false" onAction="#changePassClick" prefHeight="25.0" prefWidth="97.0" text="Change pass" />
          </children></Pane>
       <Text layoutX="38.0" layoutY="337.0" strokeType="OUTSIDE" strokeWidth="0.0" text="From" wrappingWidth="36.800018310546875">
          <font>

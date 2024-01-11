@@ -23,6 +23,7 @@ package com.example.demo;
 
 public class UserView implements Initializable{
 
+    public Button changePassButton;
     @FXML
     private TableView<Flight> departures_table;
     @FXML
@@ -245,5 +246,18 @@ public class UserView implements Initializable{
         Stage stage = (Stage) logOutButton.getScene().getWindow();
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void changePassClick(ActionEvent actionEvent) {
+        try {
+            Stage stage = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("change_pass_view.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            ChangePassView controller = fxmlLoader.getController();
+            controller.setDb(db);
+            controller.setUserId(userId);
+            stage.setScene(scene);
+            stage.show();
+        }catch(IOException ignored){};
     }
 }
