@@ -1,25 +1,25 @@
 package com.example.demo;
 
-        import javafx.collections.FXCollections;
-        import javafx.collections.ObservableList;
-        import javafx.event.ActionEvent;
-        import javafx.fxml.FXML;
-        import javafx.fxml.FXMLLoader;
-        import javafx.fxml.Initializable;
-        import javafx.scene.Scene;
-        import javafx.scene.control.Button;
-        import javafx.scene.control.TableColumn;
-        import javafx.scene.control.TableView;
-        import javafx.scene.control.TextField;
-        import javafx.scene.control.cell.PropertyValueFactory;
-        import javafx.scene.input.MouseEvent;
-        import javafx.scene.text.Text;
-        import javafx.stage.Stage;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
-        import java.io.IOException;
-        import java.net.URL;
-        import java.sql.*;
-        import java.util.ResourceBundle;
+import java.io.IOException;
+import java.net.URL;
+import java.sql.*;
+import java.util.ResourceBundle;
 
 public class UserView implements Initializable{
 
@@ -176,8 +176,8 @@ public class UserView implements Initializable{
         if (selectedFlightTicket != null) {
             try {
                 db.createStatement().executeUpdate(
-                "INSERT INTO tickets (flightid,seatnumber,ticketprice,userid)" +
-                    "VALUES (" + selectedFlightTicket.flightId1 + "," + selectedFlightTicket.seatNumber1 +","+ 100 +","+ userId + ")"
+                        "INSERT INTO tickets (flightid,seatnumber,ticketprice,userid)" +
+                                "VALUES (" + selectedFlightTicket.flightId1 + "," + selectedFlightTicket.seatNumber1 +","+ 100 +","+ userId + ")"
                 );
                 //db.createStatement().executeUpdate("INSERT INTO tickets (flightid,seatnumber,ticketprice,username) VALUES (100,1,100,'John')");
             } catch (SQLException e) {
@@ -221,7 +221,7 @@ public class UserView implements Initializable{
     public void delteTicketSelected(MouseEvent mouseEvent) {
         indexToDelete = ticketsTable.getSelectionModel().getSelectedIndex();
         if(indexToDelete>=0)
-             ticketToDeleteId = ticketId1.getCellData(indexToDelete);
+            ticketToDeleteId = ticketId1.getCellData(indexToDelete);
     }
 
     public void deleteTicketClick(ActionEvent actionEvent) {
@@ -259,6 +259,16 @@ public class UserView implements Initializable{
     }
 
     public void getInfoClick(ActionEvent actionEvent) {
-
+        try {
+            Stage stage = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("flight_detail_view.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            FlightDetailView controller = fxmlLoader.getController();
+            controller.setDb(db);
+            controller.setFlightId(selectedFlightTicket.flightId1);
+            controller.updateContents();
+            stage.setScene(scene);
+            stage.show();
+        }catch(IOException ignored){};
     }
 }
