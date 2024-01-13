@@ -38,40 +38,51 @@ public class HelloController {
     }
     public void onLoginButtonClick(ActionEvent actionEvent) {
         userName = usernameField.getText();
-        try (Statement statement = db.createStatement()) {
-            // Example query
-            String query = "SELECT pass FROM users WHERE username='" + userName+"'";
+        if(canLogIn(userName,passField.getText()))
+            changeStage();
+    }
+    boolean canLogIn(String username,String pass){
+        try{
+            Statement statement = db.createStatement();
+            String query = "SELECT pass FROM users WHERE username='" + username+"'";
             ResultSet resultSet = statement.executeQuery(query);
             resultSet.next();
-            if(resultSet.getString("pass").contentEquals( passField.getText())) {
-                changeStage();
+            if(resultSet.getString("pass").contentEquals(pass)) {
+                return true;
             }else {
                 logInErrorText.setText("Wrong user name or password");
+                return false;
             }
         } catch (SQLException e) {
-           // e.printStackTrace();
             logInErrorText.setText("Wrong user name or password");
+            return false;
         }
     }
     public void onSignupButtonClik(ActionEvent actionEvent) {
         userName = singUpUserNameField.getText();
-        if(singUpUserNameField.getText().isEmpty()){
+       if(canSignUp(singUpUserNameField.getText(),signUpPassField.getText(),signUpPass2.getText()))
+           changeStage();
+    }
+
+    boolean canSignUp(String username,String pass,String pass2){
+        if(username.isEmpty()){
             signUpErrorText.setText("Insert user name");
-            return;
+            return false;
         }
-        if(! signUpPassField.getText().contentEquals(signUpPass2.getText())){
+        if(! pass.contentEquals(pass2)){
             signUpErrorText.setText("Passwords do not match");
-            return;
+            return false;
         }
         try{
             Statement statement = db.createStatement();
             int succes = statement.executeUpdate(
                     "INSERT INTO users (username,pass) " +
-                            "VALUES ('" + singUpUserNameField.getText() + "' , '" + signUpPassField.getText() +  "')"
+                            "VALUES ('" + username + "' , '" + pass +  "')"
             );
-            changeStage();
+            return true;
         } catch (SQLException e) {
             signUpErrorText.setText("User name already in use");
+            return false;
         }
     }
     private void changeStage() {
