@@ -26,6 +26,7 @@ import java.util.ResourceBundle;
 public class UserView implements Initializable{
 
     public Button changePassButton;
+    public Text fullFlightText;
     @FXML
     private TableView<Flight> departures_table;
     @FXML
@@ -110,6 +111,7 @@ public class UserView implements Initializable{
         departureTime1.setCellValueFactory(new PropertyValueFactory<Ticket,Timestamp>("departureTime1"));
         ticketId1.setCellValueFactory(new PropertyValueFactory<Ticket,Integer>("ticketId1"));
         seat1.setCellValueFactory(new PropertyValueFactory<Ticket,Integer>("seat1"));
+
     }
 
     private String generateSearchSql(){
@@ -188,6 +190,11 @@ public class UserView implements Initializable{
     public void reserveClick(ActionEvent actionEvent) {
         if (selectedFlightTicket != null) {
             selectedFlightTicket.seatNumber1 = getEmptySeat(selectedFlightTicket.flightId1);
+            if(selectedFlightTicket.seatNumber1 == -1) {
+                fullFlightText.setText("Selected flight is full");
+                return;
+            } else
+                fullFlightText.setText("");
             try {
                 db.createStatement().executeUpdate(
                         "INSERT INTO tickets (flightid,seatnumber,ticketprice,userid)" +
@@ -199,6 +206,7 @@ public class UserView implements Initializable{
                 e.printStackTrace();
             }
         }
+        refreshTickets();
     }
 
     int getEmptySeat(int flightId){
@@ -230,7 +238,7 @@ public class UserView implements Initializable{
     }
 
 
-    public void refreshClick(ActionEvent actionEvent) {
+    public void refreshTickets() {
         ObservableList<Ticket> data = FXCollections.observableArrayList();
         try {
             Statement statement = db.createStatement();
@@ -274,6 +282,7 @@ public class UserView implements Initializable{
         }catch(SQLException e){
             e.printStackTrace();
         }
+        refreshTickets();
     }
 
     public void logOutClick(ActionEvent actionEvent) throws IOException {

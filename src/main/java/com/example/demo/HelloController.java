@@ -92,6 +92,7 @@ public class HelloController {
             UserView controller = fxmlLoader.getController();
             controller.setDb(db);
             controller.setUser(userName);
+            controller.refreshTickets();
             Stage stage = (Stage) passField.getScene().getWindow();
             stage.setScene(scene);
             stage.show();

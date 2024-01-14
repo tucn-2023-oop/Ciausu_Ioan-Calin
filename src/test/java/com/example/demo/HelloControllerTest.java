@@ -50,7 +50,6 @@ class HelloControllerTest {
         do {
             username = String.valueOf(rand.nextInt());
         }while(controller.canLogIn(username,pass));
-
-        //String pass = "hello";
+        assertTrue(controller.canSignUp(username,pass,pass));
     }
 }
